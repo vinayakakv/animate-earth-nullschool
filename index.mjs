@@ -1,7 +1,8 @@
-import { eachHourOfInterval, formatRFC3339 } from "date-fns"
+import { eachHourOfInterval, formatRFC3339, format } from "date-fns"
 import { existsSync } from "fs"
 import * as fs from "fs/promises"
 import * as path from "path"
+import jimp from "jimp"
 import { Builder } from "selenium-webdriver"
 import { Options } from "selenium-webdriver/chrome.js"
 
@@ -9,6 +10,7 @@ const baseUrl = "https://earth.nullschool.net"
 const start = new Date("2020-12-18")
 const end = new Date("2021-12-18")
 const outputDir = "output/"
+const processedDir = "output-processed/"
 const stepInHours = 24
 
 let generateUrl = ({ year, month, day, hour, minute }) => {
@@ -33,9 +35,11 @@ if (!outputDirExists) {
   fs.mkdir(outputDir)
 }
 
+let fileNames = []
 for await (const interval of intervals) {
   const date = new Date(interval)
   const fileName = path.join(outputDir, `${formatRFC3339(interval)}.png`)
+  fileNames.push(fileName)
   const exists = existsSync(fileName)
   if (exists) {
     // File exists
@@ -64,3 +68,20 @@ for await (const interval of intervals) {
 }
 
 await driver.quit()
+
+const processedDirExists = existsSync(processedDir)
+if (!processedDirExists) {
+  fs.mkdir(processedDir)
+}
+
+let i = 0
+for await (let fileName of fileNames) {
+  console.log(`Processing ${fileName}`)
+  const date = new Date(fileName.split("/").at(-1).split(".")[0])
+  const caption = format(date, "dd-MM-yyyy")
+  const file = await jimp.read(fileName)
+  const font = await jimp.loadFont(jimp.FONT_SANS_64_WHITE)
+  file.print(font, file.getWidth() * 0.7, file.getHeight() * 0.9, caption)
+  await file.writeAsync(path.join(processedDir, `${i}.png`))
+  i += 1
+}
