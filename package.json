@@ -11,6 +11,7 @@
   "author": "Vinayaka K V",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.27.0",
     "selenium-webdriver": "^4.1.0"
   },
   "devDependencies": {
