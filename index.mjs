@@ -76,16 +76,22 @@ if (!processedDirExists) {
 
 let i = 0
 for await (let fileName of fileNames) {
+  const index = i.toLocaleString("en-US", {
+    minimumIntegerDigits: 4,
+    useGrouping: false,
+  })
+  i += 1
+  const processedFileName = `${index}.png`
+  const processedFilePath = path.join(processedDir, processedFileName)
+  if (existsSync(processedFilePath)) {
+    console.log(`Skipping processing ${fileName}; ${processedFileName} exists.`)
+    continue
+  }
   console.log(`Processing ${fileName}`)
   const date = new Date(fileName.split("/").at(-1).split(".")[0])
   const caption = format(date, "dd-MM-yyyy")
   const file = await jimp.read(fileName)
   const font = await jimp.loadFont(jimp.FONT_SANS_64_WHITE)
   file.print(font, file.getWidth() * 0.7, file.getHeight() * 0.9, caption)
-  const index = i.toLocaleString("en-US", {
-    minimumIntegerDigits: 4,
-    useGrouping: false,
-  })
-  await file.writeAsync(path.join(processedDir, `${index}.png`))
-  i += 1
+  await file.writeAsync(processedFilePath)
 }
