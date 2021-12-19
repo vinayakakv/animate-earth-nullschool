@@ -6,18 +6,24 @@ import jimp from "jimp"
 import { Builder } from "selenium-webdriver"
 import { Options } from "selenium-webdriver/chrome.js"
 
-const baseUrl = "https://earth.nullschool.net"
-const start = new Date("2020-12-18")
-const end = new Date("2021-12-18")
-const outputDir = "output/"
-const processedDir = "output-processed/"
-const stepInHours = 24
+import constants from "./constants.mjs"
+
+const {
+  baseUrl,
+  start,
+  end,
+  outputDir,
+  processedDir,
+  stepInHours,
+  projection,
+  layer,
+} = constants
 
 let generateUrl = ({ year, month, day, hour, minute }) => {
   const options = { minimumIntegerDigits: 2, useGrouping: false }
   const fixedHour = hour.toLocaleString("en-US", options)
   const fixedMinute = minute.toLocaleString("en-US", options)
-  return `${baseUrl}/#${year}/${month}/${day}/${fixedHour}${fixedMinute}Z/particulates/surface/level/anim=off/overlay=pm2.5/orthographic=-279.44,20.51,1505`
+  return `${baseUrl}/#${year}/${month}/${day}/${fixedHour}${fixedMinute}Z/${layer}/orthographic=${projection}`
 }
 
 let intervals = eachHourOfInterval({ start, end }, { step: stepInHours })
