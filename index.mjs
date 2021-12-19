@@ -82,6 +82,10 @@ for await (let fileName of fileNames) {
   const file = await jimp.read(fileName)
   const font = await jimp.loadFont(jimp.FONT_SANS_64_WHITE)
   file.print(font, file.getWidth() * 0.7, file.getHeight() * 0.9, caption)
-  await file.writeAsync(path.join(processedDir, `${i}.png`))
+  const index = i.toLocaleString("en-US", {
+    minimumIntegerDigits: 4,
+    useGrouping: false,
+  })
+  await file.writeAsync(path.join(processedDir, `${index}.png`))
   i += 1
 }
