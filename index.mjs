@@ -15,6 +15,7 @@ const {
   outputDir,
   processedDir,
   stepInHours,
+  projectionValue,
   projection,
   layer,
 } = constants
@@ -23,7 +24,7 @@ let generateUrl = ({ year, month, day, hour, minute }) => {
   const options = { minimumIntegerDigits: 2, useGrouping: false }
   const fixedHour = hour.toLocaleString("en-US", options)
   const fixedMinute = minute.toLocaleString("en-US", options)
-  return `${baseUrl}/#${year}/${month}/${day}/${fixedHour}${fixedMinute}Z/${layer}/orthographic=${projection}`
+  return `${baseUrl}/#${year}/${month}/${day}/${fixedHour}${fixedMinute}Z/${layer}/${projection}=${projectionValue}`
 }
 
 let intervals = eachHourOfInterval({ start, end }, { step: stepInHours })

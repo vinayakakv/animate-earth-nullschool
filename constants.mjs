@@ -5,7 +5,8 @@ const constants = {
   outputDir: "output/",
   processedDir: "output-processed/",
   stepInHours: 24,
-  projection: "-279.44,20.51,1505",
+  projectionValue: "-279.44,20.51,1505",
+  projection: "orthographic",
   layer: "particulates/surface/level/anim=off/overlay=pm2.5",
 }
 
