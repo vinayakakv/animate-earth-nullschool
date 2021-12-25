@@ -26,11 +26,11 @@ Following are some of the animations that were made using this code. Most of the
 
 ### PM2.5 levels all over the world (Dec 2020 - Dec 2021)
 
-<iframe width="790" height="375" src="https://www.youtube.com/embed/L0015oonY-0" title="YouTube video player" frameborder="0" allow="accelerometer;clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://www.youtube.com/embed/L0015oonY-0
 
 ### PM2.5 levels over India (Dec 2020 - Dec 2021)
 
-<iframe width="790" height="375" src="https://www.youtube.com/embed/aFHjcwZvLTI" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://www.youtube.com/embed/aFHjcwZvLTI
 
 ## Contributing
 
